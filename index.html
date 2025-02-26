@@ -1,0 +1,780 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ЭнергоСнабТех - Надежные поставки электрооборудования</title>
+    <style>
+        :root {
+            --primary: #1a3c6e;
+            --secondary: #e67e22;
+            --light: #f5f5f5;
+            --dark: #333;
+            --gray: #ecf0f1;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+        
+        body {
+            color: var(--dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        header {
+            background-color: var(--primary);
+            color: white;
+            padding: 20px 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+        
+        header.scrolled {
+            padding: 10px 0;
+            background-color: rgba(26, 60, 110, 0.95);
+        }
+        
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+        
+        header.scrolled .logo {
+            font-size: 24px;
+        }
+        
+        .hero {
+            background: linear-gradient(rgba(26, 60, 110, 0.8), rgba(26, 60, 110, 0.9)), url("/api/placeholder/1200/600");
+            background-size: cover;
+            color: white;
+            padding: 140px 0 80px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero h1 {
+            font-size: 36px;
+            margin-bottom: 20px;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 1s forwards;
+        }
+        
+        .hero p {
+            font-size: 18px;
+            max-width: 600px;
+            margin: 0 auto;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 1s forwards 0.3s;
+        }
+        
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        section {
+            padding: 80px 0;
+            position: relative;
+        }
+        
+        h2 {
+            text-align: center;
+            margin-bottom: 40px;
+            color: var(--primary);
+            position: relative;
+            padding-bottom: 15px;
+        }
+        
+        h2:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background-color: var(--secondary);
+            transition: width 0.5s ease;
+        }
+        
+        section:hover h2:after {
+            width: 120px;
+        }
+        
+        .products {
+            background-color: var(--gray);
+        }
+        
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 30px;
+        }
+        
+        .product-category {
+            background: white;
+            border-radius: 5px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        
+        .product-category:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        
+        .product-category h3 {
+            color: var(--primary);
+            margin-bottom: 15px;
+            border-bottom: 2px solid var(--secondary);
+            padding-bottom: 10px;
+        }
+        
+        .benefits {
+            background-color: white;
+        }
+        
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 30px;
+        }
+        
+        .benefit-card {
+            border-left: 3px solid var(--secondary);
+            padding: 15px;
+            background-color: var(--gray);
+            border-radius: 0 5px 5px 0;
+            transition: all 0.3s ease;
+            opacity: 0;
+            transform: translateX(-20px);
+        }
+        
+        .benefit-card:hover {
+            transform: translateX(5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .benefit-card h3 {
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+        
+        .special-conditions {
+            background-color: var(--gray);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .special-conditions:before {
+            content: '';
+            position: absolute;
+            top: -100px;
+            left: 0;
+            width: 100%;
+            height: 100px;
+            background: linear-gradient(to bottom right, transparent 49%, var(--gray) 50%);
+        }
+        
+        .conditions-list {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .condition-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.5s ease;
+        }
+        
+        .condition-item:before {
+            content: "•";
+            color: var(--secondary);
+            font-size: 24px;
+            margin-right: 10px;
+        }
+        
+        .workflow {
+            background-color: white;
+        }
+        
+        .workflow-steps {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .step {
+            display: flex;
+            margin-bottom: 20px;
+            align-items: center;
+            opacity: 0;
+            transform: translateX(-20px);
+            transition: all 0.5s ease;
+        }
+        
+        .step-number {
+            background-color: var(--primary);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-right: 20px;
+            flex-shrink: 0;
+            transition: all 0.3s ease;
+        }
+        
+        .step:hover .step-number {
+            transform: scale(1.1);
+            background-color: var(--secondary);
+        }
+        
+        .special-offer {
+            background-color: var(--primary);
+            color: white;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .special-offer:before {
+            content: '';
+            position: absolute;
+            top: -100px;
+            left: 0;
+            width: 100%;
+            height: 100px;
+            background: linear-gradient(to bottom right, transparent 49%, var(--primary) 50%);
+        }
+        
+        .special-offer h2 {
+            color: white;
+        }
+        
+        .special-offer-list {
+            max-width: 600px;
+            margin: 0 auto;
+            text-align: left;
+        }
+        
+        .contact-form {
+            max-width: 600px;
+            margin: 0 auto;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.5s ease;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        
+        input, textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+        
+        input:focus, textarea:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 2px rgba(26, 60, 110, 0.2);
+            outline: none;
+        }
+        
+        button {
+            background-color: var(--secondary);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        button:hover {
+            background-color: #d35400;
+        }
+        
+        button:after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 5px;
+            height: 5px;
+            background: rgba(255, 255, 255, 0.5);
+            opacity: 0;
+            border-radius: 100%;
+            transform: scale(1, 1) translate(-50%);
+            transform-origin: 50% 50%;
+        }
+        
+        button:focus:not(:active)::after {
+            animation: ripple 1s ease-out;
+        }
+        
+        @keyframes ripple {
+            0% {
+                transform: scale(0, 0);
+                opacity: 0.5;
+            }
+            100% {
+                transform: scale(20, 20);
+                opacity: 0;
+            }
+        }
+        
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 30px 0;
+            text-align: center;
+        }
+        
+        .contacts {
+            margin: 20px 0;
+        }
+        
+        .contact-item {
+            margin-bottom: 10px;
+            transition: all 0.3s ease;
+        }
+        
+        .contact-item:hover {
+            transform: translateY(-3px);
+        }
+        
+        .contact-item a {
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .contact-item a:hover {
+            color: var(--secondary);
+        }
+        
+        .fade-in {
+            opacity: 1 !important;
+            transform: translate(0, 0) !important;
+        }
+        
+        .back-to-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: var(--secondary);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            cursor: pointer;
+            opacity: 0;
+            transition: all 0.3s ease;
+            z-index: 999;
+            transform: translateY(20px);
+        }
+        
+        .back-to-top.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        @media (max-width: 768px) {
+            .products-grid, .benefits-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .hero h1 {
+                font-size: 28px;
+            }
+            
+            .hero p {
+                font-size: 16px;
+            }
+            
+            section {
+                padding: 60px 0;
+            }
+        }
+        
+        /* Параллакс эффект для фона */
+        .parallax-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('/api/placeholder/400/400');
+            background-size: cover;
+            background-position: center;
+            opacity: 0.05;
+            transform: translateZ(-1px) scale(1.5);
+            z-index: -1;
+        }
+    </style>
+</head>
+<body>
+    <header id="header">
+        <div class="container">
+            <div class="logo">ЭНЕРГОСНАБТЕХ</div>
+        </div>
+    </header>
+    
+    <section class="hero">
+        <div class="container">
+            <h1>Надежные поставки электрооборудования для вашего бизнеса</h1>
+            <p>Мы понимаем ваши задачи и помогаем их решать</p>
+        </div>
+    </section>
+    
+    <section class="products" id="products">
+        <div class="parallax-bg"></div>
+        <div class="container">
+            <h2>Наш ассортимент</h2>
+            <div class="products-grid">
+                <div class="product-category">
+                    <h3>КТП</h3>
+                    <p>Киосковые, Мачтовые, Столбовые</p>
+                </div>
+                <div class="product-category">
+                    <h3>Трансформаторы напряжения</h3>
+                    <p>ТМ, ТМГ, ТМЗ, ЗНОЛ, НТМИ, НАМИ, ТСЗ, ТСГЛ</p>
+                </div>
+                <div class="product-category">
+                    <h3>Трансформаторы тока</h3>
+                    <p>ТОЛ, ТЛК, ТПЛ, ТПОЛ</p>
+                </div>
+                <div class="product-category">
+                    <h3>Изоляторы</h3>
+                    <p>ИО, ИПУ, С4-80, С4-195</p>
+                </div>
+                <div class="product-category">
+                    <h3>Разъединители</h3>
+                    <p>РВЗ, РЛНД, РДЗ</p>
+                </div>
+                <div class="product-category">
+                    <h3>Выключатели</h3>
+                    <p>ВНА, ВНР, ВНП</p>
+                </div>
+                <div class="product-category">
+                    <h3>Автоматические выключатели</h3>
+                    <p>А, АЕ, ВА</p>
+                </div>
+                <div class="product-category">
+                    <h3>Пускатели магнитные</h3>
+                    <p>ПМ, ПМЕ, ПМА, КМ</p>
+                </div>
+                <div class="product-category">
+                    <h3>Реле</h3>
+                    <p>РВ, РП, РУ, РСП, РСГ, РВП</p>
+                </div>
+            </div>
+            <div style="text-align: center; margin-top: 30px;">
+                <p><b>Новое / с хранения / б.у.</b></p>
+            </div>
+        </div>
+    </section>
+    
+    <section class="benefits" id="benefits">
+        <div class="container">
+            <h2>Решаем ваши задачи</h2>
+            <div class="benefits-grid">
+                <div class="benefit-card">
+                    <h3>Дефицит качественного оборудования?</h3>
+                    <p>Мы поставляем только проверенную продукцию.</p>
+                </div>
+                <div class="benefit-card">
+                    <h3>Сжатые сроки?</h3>
+                    <p>Быстрая доставка без срывов.</p>
+                </div>
+                <div class="benefit-card">
+                    <h3>Высокая конкуренция?</h3>
+                    <p>Предлагаем конкурентные цены, гибкие условия оплаты и скидки на объёмные заказы.</p>
+                </div>
+                <div class="benefit-card">
+                    <h3>Сложности с нормативами?</h3>
+                    <p>Техническая поддержка при подборе и монтаже оборудования.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="special-conditions" id="conditions">
+        <div class="container">
+            <h2>Специальные условия</h2>
+            <div class="conditions-list">
+                <div class="condition-item">
+                    <p>Индивидуальное ценообразование для постоянных клиентов</p>
+                </div>
+                <div class="condition-item">
+                    <p>Фиксация цен на срок реализации проекта</p>
+                </div>
+                <div class="condition-item">
+                    <p>Бесплатный подбор аналогов</p>
+                </div>
+                <div class="condition-item">
+                    <p>Комплектация заказа "под ключ"</p>
+                </div>
+                <div class="condition-item">
+                    <p>Бесплатная доставка* (*обсуждается индивидуально)</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="workflow" id="workflow">
+        <div class="parallax-bg"></div>
+        <div class="container">
+            <h2>Как мы работаем</h2>
+            <div class="workflow-steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <div class="step-text">Получаем заявку или спецификацию</div>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <div class="step-text">Производим расчет в течение рабочего дня</div>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <div class="step-text">Согласовываем условия поставки</div>
+                </div>
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <div class="step-text">Комплектуем и доставляем заказ</div>
+                </div>
+                <div class="step">
+                    <div class="step-number">5</div>
+                    <div class="step-text">Предоставляем полный пакет документов</div>
+                </div>
+                <div class="step">
+                    <div class="step-number">6</div>
+                    <div class="step-text">Обеспечиваем техническую поддержку</div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="special-offer" id="offer">
+        <div class="container">
+            <h2>Специальное предложение для новых клиентов</h2>
+            <div class="special-offer-list">
+                <div class="condition-item">
+                    <p>Скидка до 10% на первый заказ</p>
+                </div>
+                <div class="condition-item">
+                    <p>Бесплатная доставка независимо от суммы</p>
+                </div>
+                <div class="condition-item">
+                    <p>Помощь технического специалиста</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="contact" id="contact">
+        <div class="container">
+            <h2>Оформить заказ</h2>
+            <div class="contact-form">
+                <form id="orderForm" onsubmit="return sendOrder(event)">
+                    <div class="form-group">
+                        <label for="name">Имя:</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Контактный телефон:</label>
+                        <input type="tel" id="phone" name="phone" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="equipment">Интересующее оборудование:</label>
+                        <textarea id="equipment" name="equipment" rows="4" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit">Отправить заявку</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+    
+    <footer>
+        <div class="container">
+            <div class="contacts">
+                <div class="contact-item">
+                    <a href="tel:+79082713411">+7(908) 271-34-11 Артур</a>
+                </div>
+                <div class="contact-item">
+                    <a href="tel:+79800318406">+7(980) 031-84-06 Евгений</a>
+                </div>
+                <div class="contact-item">
+                    <a href="tel:+79922215555">+7(992) 221-55-55 Евгений</a>
+                </div>
+                <div class="contact-item">
+                    <a href="mailto:energosnab159@yandex.ru">energosnab159@yandex.ru</a>
+                </div>
+                <div class="contact-item">
+                    <a href="https://energosnabteh.clients.site" target="_blank">https://energosnabteh.clients.site</a>
+                </div>
+            </div>
+            <p>&copy; 2025 ЭНЕРГОСНАБТЕХ. Все права защищены.</p>
+        </div>
+    </footer>
+    
+    <div class="back-to-top" id="backToTop">↑</div>
+
+    <script>
+        // Анимация появления элементов при скролле
+        function checkScroll() {
+            const elements = document.querySelectorAll('.product-category, .benefit-card, .condition-item, .step, .contact-form');
+            const windowHeight = window.innerHeight;
+            
+            elements.forEach(element => {
+                const position = element.getBoundingClientRect().top;
+                if(position < windowHeight * 0.9) {
+                    element.classList.add('fade-in');
+                }
+            });
+            
+            // Изменение хедера при скролле
+            const header = document.getElementById('header');
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+            
+            // Показать/скрыть кнопку "наверх"
+            const backToTop = document.getElementById('backToTop');
+            if (window.scrollY > 300) {
+                backToTop.classList.add('visible');
+            } else {
+                backToTop.classList.remove('visible');
+            }
+        }
+        
+        // Плавный скролл к элементу
+        function scrollToElement(elementId) {
+            const element = document.getElementById(elementId);
+            window.scrollTo({
+                top: element.offsetTop - 80,
+                behavior: 'smooth'
+            });
+        }
+        
+        // Плавный скролл наверх
+        document.getElementById('backToTop').addEventListener('click', function() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+        
+        // Эффект волны при клике на кнопку
+        const buttons = document.querySelectorAll('button');
+        buttons.forEach(button => {
+            button.addEventListener('click', function(e) {
+                const x = e.clientX - e.target.getBoundingClientRect().left;
+                const y = e.clientY - e.target.getBoundingClientRect().top;
+                
+                const ripple = document.createElement('span');
+                ripple.style.left = x + 'px';
+                ripple.style.top = y + 'px';
+                
+                this.appendChild(ripple);
+                
+                setTimeout(() => {
+                    ripple.remove();
+                }, 600);
+            });
+        });
+        
+        // Отправка формы
+        function sendOrder(event) {
+            event.preventDefault();
+            
+            const name = document.getElementById('name').value;
+            const phone = document.getElementById('phone').value;
+            const equipment = document.getElementById('equipment').value;
+            
+            // Здесь должен быть код для отправки данных на сервер
+            // Пример использования формы для отправки на email
+            const emailBody = `
+                Новая заявка от ${name}
+                Телефон: ${phone}
+                Интересует оборудование: ${equipment}
+            `;
+            
+            // В реальном приложении здесь был бы AJAX запрос к серверу
+            // который бы отправлял данные на почту
+            alert('Ваша заявка отправлена! Мы свяжемся с вами в ближайшее время.');
+            document.getElementById('orderForm').reset();
+            
+            return false;
+        }
+        
+        // Инициализация при загрузке страницы
+        window.addEventListener('load', function() {
+            checkScroll(); // Проверить элементы при загрузке
+            
+            // Добавить задержку для начальной анимации
+            const productItems = document.querySelectorAll('.product-category');
+            productItems.forEach((item, index) => {
+                setTimeout(() => {
+                    item.classList.add('fade-in');
+                }, 100 * index);
+            });
+        });
+        
+        // Проверять при скролле
+        window.addEventListener('scroll', checkScroll);
+    </script>
+</body>
+</html>
