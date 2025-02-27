@@ -607,7 +607,44 @@
             </div>
         </div>
     </div>
-    </section>
+</section>
+
+<style>
+    .carousel-container {
+        overflow: hidden;
+        width: 100%;
+        max-width: 600px;
+        margin: auto;
+        position: relative;
+    }
+    
+    .carousel {
+        display: flex;
+        transition: transform 0.5s ease-in-out;
+    }
+    
+    .carousel img {
+        width: 50%;
+        flex: 0 0 auto;
+    }
+</style>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const carousel = document.querySelector(".carousel");
+        let index = 0;
+        
+        function moveCarousel() {
+            index += 2;
+            if (index >= carousel.children.length) {
+                index = 0;
+            }
+            carousel.style.transform = `translateX(-${index * 50}%)`;
+        }
+        
+        setInterval(moveCarousel, 2000);
+    });
+</script>
 
     <section class="benefits" id="benefits">
         <div class="container">
