@@ -522,7 +522,64 @@
             </div>
         </div>
     </section>
+
+    <section class="gallery" id="gallery">
+    <div class="container">
+        <h2>Фотогалерея</h2>
+        <div class="carousel-container">
+            <div class="carousel">
+                <img src="https://github.com/Malikovich101/energosnabtech/blob/main/%D0%92%D0%9D%D0%90.jpeg" alt="Фото 1">
+                <img src="https://github.com/Malikovich101/energosnabtech/blob/main/image%20(1).webp" alt="Фото 2">
+                <img src="https://github.com/Malikovich101/energosnabtech/blob/main/%D0%9A%D0%A2%D0%9F.png" alt="Фото 3">
+                <img src="https://github.com/Malikovich101/energosnabtech/blob/main/%D0%A0%D0%9B%D0%9D%D0%94.jpeg" alt="Фото 4">
+                <img src="https://github.com/Malikovich101/energosnabtech/blob/main/%D0%A2%D0%9C%D0%93.jpg" alt="Фото 5">
+                <img src="https://github.com/Malikovich101/energosnabtech/blob/main/%D0%BF%D0%B5%D1%80%D0%B5%D0%B2%D0%BE%D0%B7%D0%BA%D0%B0%20%D1%82%D1%80%D0%B0%D0%BD%D1%81%D0%BE%D0%B2.jpg" alt="Фото 6">
+                <img src="https://github.com/Malikovich101/energosnabtech/blob/main/%D0%BF%D0%BE%D1%80%D1%82%D0%BD%D0%B5%D1%80.png" alt="Фото 7">
+                <img src="https://github.com/Malikovich101/energosnabtech/blob/main/%D1%82%D0%BC%D0%B3%20630.jpeg" alt="Фото 8">
+                <img src="image9.jpg" alt="Фото 9">
+                <img src="image10.jpg" alt="Фото 10">
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+    .carousel-container {
+        overflow: hidden;
+        width: 100%;
+        max-width: 600px;
+        margin: auto;
+        position: relative;
+    }
     
+    .carousel {
+        display: flex;
+        transition: transform 0.5s ease-in-out;
+    }
+    
+    .carousel img {
+        width: 50%;
+        flex: 0 0 auto;
+    }
+</style>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const carousel = document.querySelector(".carousel");
+        let index = 0;
+        
+        function moveCarousel() {
+            index += 2;
+            if (index >= carousel.children.length) {
+                index = 0;
+            }
+            carousel.style.transform = `translateX(-${index * 50}%)`;
+        }
+        
+        setInterval(moveCarousel, 2000);
+    });
+</script>
+
     <section class="benefits" id="benefits">
         <div class="container">
             <h2>Решаем ваши задачи</h2>
