@@ -555,16 +555,13 @@
     .carousel {
         display: flex;
         transition: transform 0.5s ease-in-out;
+        gap: 10px;
     }
     
     .carousel img {
         width: 50%;
         flex: 0 0 auto;
-        margin-right: 10px;
-    }
-
-    .carousel img:last-child {
-    margin-right: 0; /* Убираем отступ у последнего изображения */
+        box-sizing: border-box;
     }
 
 </style>
